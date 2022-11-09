@@ -8,13 +8,25 @@ import { PokeApiService } from 'src/app/service/poke-api.service';
 })
 export class PokeListComponent implements OnInit {
   public getAllPokemons: any;
+  public setAllPokemons: any;
 
   constructor(private pokeApiService: PokeApiService) {}
 
   ngOnInit(): void {
     this.pokeApiService.apiListAllPokemons.subscribe((res) => {
       this.getAllPokemons = res.results;
-      console.log(this.getAllPokemons);
+      this.setAllPokemons = this.getAllPokemons;
+
+      // console.log(this.getAllPokemons);
     });
+  }
+
+  public getSearch(value: string) {
+    // console.log(value);
+    const filter = this.setAllPokemons.filter((res: any) => {
+      return !res.name.indexOf(value.toLowerCase());
+    });
+
+    this.getAllPokemons = filter;
   }
 }
